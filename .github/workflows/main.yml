@@ -36,5 +36,16 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
         source: "demo-0.0.1-SNAPSHOT.jar"
-        target: "demo-0.0.1-SNAPSHOT.jar"
+        target: "./"
+
+    - name: restart spring project
+      uses: appleboy/ssh-actions@v1.0.3
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.REMOTE_PORT }}
+        script: |
+          ./kill.sh
+          nohup java -jar demo-0.0.1-SNAPSHOT.jar & 
 
