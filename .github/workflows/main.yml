@@ -9,13 +9,30 @@ jobs:
     name: Deploy to EC2
     runs-on: ubuntu-latest
 
+
+
     steps:
-    - name: get code from github
-      uses: appleboy/ssh-action@v1.0.3
+    - name: Setup Java-17
+      uses: actions/setup-java@v3
       with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        port: ${{ secrets.REMOTE_PORT }}
-        script: |
-          echo test > /tmp/abcd
+        distribution: 'temurin'
+        java-version: '17'
+    - name: checkout
+      uses: actions/checkout@vv3
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
+
+
+#    - name: get code from github
+#      uses: appleboy/ssh-action@v1.0.3
+#      with:
+#        host: ${{ secrets.REMOTE_HOST }}
+#        username: ${{ secrets.REMOTE_USER }}
+#        key: ${{ secrets.SSH_KEY }}
+#        port: ${{ secrets.REMOTE_PORT }}
+#        script: |
+#          echo test > /tmp/abcd
