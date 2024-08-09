@@ -47,5 +47,5 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           ./kill.sh
-          timeout 30 ./start.sh &
+          ./start.sh 
 
