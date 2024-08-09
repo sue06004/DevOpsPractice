@@ -26,13 +26,13 @@ jobs:
       run: ./gradlew clean build
       working-directory: ./demo
 
+    - name: deploy to ec2
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.REMOTE_PORT }}
+        source: "./demo/build/libs/demo-0.0.1-SNAPSHOT.jar"
+        target: "/home/ubuntu"
 
-#    - name: get code from github
-#      uses: appleboy/ssh-action@v1.0.3
-#      with:
-#        host: ${{ secrets.REMOTE_HOST }}
-#        username: ${{ secrets.REMOTE_USER }}
-#        key: ${{ secrets.SSH_KEY }}
-#        port: ${{ secrets.REMOTE_PORT }}
-#        script: |
-#          echo test > /tmp/abcd
