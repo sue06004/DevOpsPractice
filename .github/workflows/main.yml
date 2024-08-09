@@ -25,6 +25,8 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build
       working-directory: ./demo
+    - name: copy jar
+      run: cp demo/build/libs/demo-0.0.1-SNAPSHOT.jar ./
 
     - name: deploy to ec2
       uses: appleboy/scp-action@v0.1.7
@@ -33,6 +35,6 @@ jobs:
         username: ${{ secrets.REMOTE_USER }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.REMOTE_PORT }}
-        source: "demo/build/libs/demo-0.0.1-SNAPSHOT.jar"
+        source: "demo-0.0.1-SNAPSHOT.jar"
         target: "demo-0.0.1-SNAPSHOT.jar"
 
